@@ -29,8 +29,8 @@ app.post('/api/email/verify-otp', async (req: Request, res: Response) => {
 
 app.post('/api/email/authenticate', async (req: Request, res: Response) => {
   const idToken = req.body.idToken;
-  const provider = req.body.provider;
-  const result = authenticate(idToken, provider);
+  const provider = 'okto';
+  const result = await authenticate(idToken, provider);
   res.status(200).json(result);
 })
 
