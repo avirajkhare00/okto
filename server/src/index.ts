@@ -16,7 +16,7 @@ app.get('/ping', (req: Request, res: Response) => {
 
 app.post('/api/email/send-otp', async (req: Request, res: Response) => {
   const result = await sendOtp(req.body.email);
-  res.status(201).json(result);
+  res.status(200).json(result);
 });
 
 app.post('/api/email/verify-otp', async (req: Request, res: Response) => {
@@ -24,7 +24,7 @@ app.post('/api/email/verify-otp', async (req: Request, res: Response) => {
   const otp = req.body.otp;
   const token = req.body.token;
   const result = await verifyOtp(token, otp, email);
-  res.status(201).json(result);
+  res.status(200).json(result);
 });
 
 app.post('/api/email/authenticate', async (req: Request, res: Response) => {
