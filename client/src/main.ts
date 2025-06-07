@@ -27,8 +27,8 @@ document.getElementById('emailSubmitBtn')?.addEventListener('click', () => {
 document.getElementById('otpSubmitBtn')?.addEventListener('click', () => {
   const otpInput = document.getElementById('otp') as HTMLInputElement | null;
   const emailInput = document.getElementById('email') as HTMLInputElement | null;
-  const otpValue = otpInput?.value || '';
-  const emailValue = emailInput?.value || '';
-  const emailOtpToken = window.localStorage.get('emailOtpToken');
+  const otpValue: string = otpInput?.value || '';
+  const emailValue: string = emailInput?.value || '';
+  const emailOtpToken: string = window.localStorage.getItem('emailOtpToken') || '';
   verifyEmailOTP(emailValue, otpValue, emailOtpToken);
 });

@@ -24,6 +24,6 @@ document.getElementById('otpSubmitBtn')?.addEventListener('click', () => {
     const emailInput = document.getElementById('email');
     const otpValue = otpInput?.value || '';
     const emailValue = emailInput?.value || '';
-    const emailOtpToken = window.localStorage.get('emailOtpToken');
+    const emailOtpToken = window.localStorage.getItem('emailOtpToken') || '';
     verifyEmailOTP(emailValue, otpValue, emailOtpToken);
 });
