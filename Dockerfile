@@ -10,7 +10,7 @@ COPY ./server .
 
 RUN npm run build
 
-RUN cd client && npm run build
+RUN cd client && npm ci && npm run build
 
 RUN mkdir -p public
 
