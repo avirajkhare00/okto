@@ -10,6 +10,8 @@ COPY ./server .
 
 RUN npm run build
 
+RUN cd client && npm run build
+
 RUN mkdir -p public
 
 COPY ./client/dist ./client/index.html ./client/src ./public
