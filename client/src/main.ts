@@ -24,11 +24,18 @@ document.getElementById('emailSubmitBtn')?.addEventListener('click', () => {
   sendEmailOTP(emailValue);
 });
 
-document.getElementById('otpSubmitBtn')?.addEventListener('click', () => {
+document.getElementById('otpSubmitBtn')?.addEventListener('click', async () => {
   const otpInput = document.getElementById('otp') as HTMLInputElement | null;
   const emailInput = document.getElementById('email') as HTMLInputElement | null;
   const otpValue: string = otpInput?.value || '';
   const emailValue: string = emailInput?.value || '';
   const emailOtpToken: string = window.localStorage.getItem('emailOtpToken') || '';
   verifyEmailOTP(emailValue, otpValue, emailOtpToken);
+  //lets verify also
+  const oktaAuthToken = localStorage.getItem('oktaAuthToken') || '';
+  const sessionResult = await getoktaAuthTokenDetails(oktaAuthToken);
+  const sessionDetailsDiv = document.getElementById('sessionDetails');
+  if (sessionDetailsDiv) {
+    sessionDetailsDiv.innerText = JSON.stringify(sessionResult);
+  }
 });
