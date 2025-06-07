@@ -1,4 +1,4 @@
-import { getoktaAuthTokenDetails, sendEmailOTP, verifyEmailOTP } from './oktoApiClient';
+import { getoktaAuthTokenDetails, sendEmailOTP, verifyEmailOTPAndGetAuthToken } from './oktoApiClient';
 
 (async () => {
   // grab oktaAuthToken
@@ -30,9 +30,8 @@ document.getElementById('otpSubmitBtn')?.addEventListener('click', async () => {
   const otpValue: string = otpInput?.value || '';
   const emailValue: string = emailInput?.value || '';
   const emailOtpToken: string = window.localStorage.getItem('emailOtpToken') || '';
-  verifyEmailOTP(emailValue, otpValue, emailOtpToken);
   //lets verify also
-  const oktaAuthToken = localStorage.getItem('oktaAuthToken') || '';
+  const oktaAuthToken = await verifyEmailOTPAndGetAuthToken(emailValue, otpValue, emailOtpToken);
   const sessionResult = await getoktaAuthTokenDetails(oktaAuthToken);
   const sessionDetailsDiv = document.getElementById('sessionDetails');
   if (sessionDetailsDiv) {
