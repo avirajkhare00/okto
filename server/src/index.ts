@@ -1,12 +1,21 @@
 import { sendOtp, verifyOtp } from './auth/emailAuthenticate';
 import { authenticate } from './auth/authenticate';
 import express from 'express';
+import cors from 'cors';
 import { Request, Response } from 'express';
 import { verifySession } from './auth/verifySession';
 
 const app = express();
 
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  optionsSuccessStatus: 204,
+  credentials: true,
+}
+
+app.use(cors(corsOptions));
 app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
 app.get('/ping', (req: Request, res: Response) => {
   res.status(200).json({
@@ -32,6 +41,12 @@ app.post('/api/email/authenticate', async (req: Request, res: Response) => {
   const provider = 'okto';
   const result = await authenticate(idToken, provider);
   res.status(200).json(result);
+})
+
+app.post('/api/google/oauth', async (req: Request, res: Response) => {
+  const jwtCredential = req.body.credential;
+  const oktaAuthToken = await authenticate(jwtCredential, 'google');
+  res.redirect(`http://localhost:3000?oktaAuthToken=${oktaAuthToken}`);
 })
 
 app.post('/api/google/authenticate', async (req: Request, res: Response) => {
