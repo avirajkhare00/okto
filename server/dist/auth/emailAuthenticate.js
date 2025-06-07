@@ -18,7 +18,7 @@ const axios_1 = __importDefault(require("axios"));
 const generateClientSignature_1 = require("../utils/generateClientSignature");
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
-const client_swa = process.env.CLIENT_SWA;
+const client_swa = process.env.OKTO_CLIENT_SWA;
 /*
 * function used to make a post request to okto staging api
 */

@@ -6,7 +6,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const client_swa = process.env.CLIENT_SWA as Hex;
+const client_swa = process.env.OKTO_CLIENT_SWA as Hex;
 
 /*
 * function used to make a post request to okto staging api
