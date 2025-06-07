@@ -9,3 +9,23 @@ export async function getoktaAuthTokenDetails(token) {
     const respJson = await result.json();
     return respJson;
 }
+export async function sendEmailOTP(email) {
+    const result = await fetch('https://okto-production.up.railway.app/api/email/send-otp', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: email }) });
+    if (!result.ok) {
+        throw new Error("Network error!!!");
+    }
+    const respJson = await result.json();
+    //store emailOtpToken
+    window.localStorage.setItem('emailOtpToken', respJson.data.token);
+    return respJson;
+}
+export async function verifyEmailOTP(email, otp, emailOtpToken) {
+    const result = await fetch('https://okto-production.up.railway.app/api/email/verify-otp', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: email, otp: otp, token: emailOtpToken }) });
+    if (!result.ok) {
+        throw new Error("Network error!!!");
+    }
+    const respJson = await result.json();
+    const oktaAuthToken = respJson.auth_token;
+    window.localStorage.setItem('oktaAuthToken', oktaAuthToken);
+    return respJson;
+}

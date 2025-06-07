@@ -1,4 +1,4 @@
-import { getoktaAuthTokenDetails } from './oktoApiClient.js';
+import { getoktaAuthTokenDetails, sendEmailOTP, verifyEmailOTP } from './oktoApiClient.js';
 (async () => {
     // grab oktaAuthToken
     const URLParams = new URLSearchParams(window.location.search);
@@ -14,3 +14,16 @@ import { getoktaAuthTokenDetails } from './oktoApiClient.js';
         }
     }
 })();
+document.getElementById('emailSubmitBtn')?.addEventListener('click', () => {
+    const emailInput = document.getElementById('email');
+    const emailValue = emailInput?.value || '';
+    sendEmailOTP(emailValue);
+});
+document.getElementById('otpSubmitBtn')?.addEventListener('click', () => {
+    const otpInput = document.getElementById('otp');
+    const emailInput = document.getElementById('email');
+    const otpValue = otpInput?.value || '';
+    const emailValue = emailInput?.value || '';
+    const emailOtpToken = window.localStorage.get('emailOtpToken');
+    verifyEmailOTP(emailValue, otpValue, emailOtpToken);
+});
