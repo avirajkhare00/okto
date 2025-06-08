@@ -60,7 +60,7 @@ app.get('/api/verify-session', async (req: Request, res: Response) => {
 
 app.post('/api/token-transfer', async (req: Request, res: Response) => {
   const idToken = req.headers.authorization?.split(' ')[1] || '';
-  const senderAddr = req.body.senderAddr;
+  const senderAddr = req.body.senderAddress;
   const amount: number = req.body.amount;
   const sessionConfig = req.body.sessionConfig;
   const data: Data = {

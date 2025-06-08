@@ -63,7 +63,7 @@ app.get('/api/verify-session', (req, res) => __awaiter(void 0, void 0, void 0, f
 app.post('/api/token-transfer', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     const idToken = ((_a = req.headers.authorization) === null || _a === void 0 ? void 0 : _a.split(' ')[1]) || '';
-    const senderAddr = req.body.senderAddr;
+    const senderAddr = req.body.senderAddress;
     const amount = req.body.amount;
     const sessionConfig = req.body.sessionConfig;
     const data = {
