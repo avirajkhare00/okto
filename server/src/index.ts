@@ -3,6 +3,8 @@ import { authenticate } from './auth/authenticate';
 import express from 'express';
 import { Request, Response } from 'express';
 import { verifySession } from './auth/verifySession';
+import { transferToken } from './intents/tokenTransfer';
+import { Data } from './intents/tokenTransfer';
 
 const app = express();
 
@@ -55,5 +57,21 @@ app.get('/api/verify-session', async (req: Request, res: Response) => {
   const resp = await verifySession(idToken);
   res.status(200).json(resp);
 });
+
+app.post('/api/token-transfer', async (req: Request, res: Response) => {
+  const idToken = req.headers.authorization?.split(' ')[1] || '';
+  const senderAddr = req.body.senderAddr;
+  const amount: number = req.body.amount;
+  const sessionConfig = req.body.sessionConfig;
+  const data: Data = {
+    caip2Id: "eip155:84532", // BASE_TESTNET
+    recipient: senderAddr,
+    token: "", // Left empty because transferring native token
+    amount: amount, // denomination in lowest decimal (18 for WETH)
+  }
+
+  const result = await transferToken(data, sessionConfig, idToken);
+  res.json({ result: result });
+})
 
 app.listen(8080);
