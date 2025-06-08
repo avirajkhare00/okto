@@ -2,8 +2,6 @@ import axios from "axios";
 import dotenv from "dotenv";
 
 dotenv.config();
-const OktoAuthToken = process.env.OKTO_AUTH_TOKEN || "";
-
 /**
  * Retrieves all the enabled networks from the Okto Client Dashboard
  *
@@ -16,7 +14,6 @@ const OktoAuthToken = process.env.OKTO_AUTH_TOKEN || "";
  * @throws Error if the API request fails.
  */
 export async function getChains(OktoAuthToken: string) {
-  console.log(OktoAuthToken);
   try {
     const response = await axios.get(
       "https://sandbox-api.okto.tech/api/oc/v1/supported/networks",

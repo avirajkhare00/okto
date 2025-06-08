@@ -1,4 +1,4 @@
-export async function getoktaAuthTokenDetails(token: string) {
+export async function getoktoAuthTokenDetails(token: string) {
   const headers = {
     'Authorization': `Bearer ${token}`
   }
@@ -27,9 +27,9 @@ export async function verifyEmailOTPAndGetAuthToken(email: string, otp: string, 
     throw new Error("Network error!!!");
   }
   const respJson = await result.json();
-  const oktaAuthToken = respJson.auth_token;
-  window.localStorage.setItem('oktaAuthToken', oktaAuthToken);
-  return oktaAuthToken;
+  const oktoAuthToken = respJson.auth_token;
+  window.localStorage.setItem('oktoAuthToken', oktoAuthToken);
+  return oktoAuthToken;
 }
 
 export async function executeTokenTransfer(receiptAddress: string, receiptAmount: number, session: any, token: string, userSWA: string) {

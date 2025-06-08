@@ -41,8 +41,8 @@ app.post('/api/email/authenticate', async (req: Request, res: Response) => {
 
 app.post('/api/google/oauth', async (req: Request, res: Response) => {
   const jwtCredential = req.body.credential;
-  const oktaAuthToken = await authenticate(jwtCredential, 'google');
-  res.redirect(`https://okto-production.up.railway.app?oktaAuthToken=${oktaAuthToken}`);
+  const oktoAuthToken = await authenticate(jwtCredential, 'google');
+  res.redirect(`https://okto-production.up.railway.app?oktoAuthToken=${oktoAuthToken}`);
 })
 
 app.post('/api/google/authenticate', async (req: Request, res: Response) => {
