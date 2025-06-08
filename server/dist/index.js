@@ -64,7 +64,7 @@ app.post('/api/token-transfer', (req, res) => __awaiter(void 0, void 0, void 0, 
     var _a;
     const idToken = ((_a = req.headers.authorization) === null || _a === void 0 ? void 0 : _a.split(' ')[1]) || '';
     const senderAddr = req.body.senderAddress;
-    const amount = req.body.amount;
+    const amount = req.body.senderAmount;
     const sessionConfig = req.body.sessionConfig;
     const data = {
         caip2Id: "eip155:84532", // BASE_TESTNET
