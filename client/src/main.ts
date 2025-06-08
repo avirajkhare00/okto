@@ -46,6 +46,5 @@ document.getElementById('tokenTransferSubmitBtn')?.addEventListener('click', asy
   const oktoAuthToken = localStorage.getItem('oktoAuthToken') || '';
   const userSWA = (await getoktoAuthTokenDetails(oktoAuthToken))?.data?.user_swa;
   const session = SessionKey.create();
-  const token = "";
-  executeTokenTransfer(receiptAddress, receiptAmount, session, token, userSWA);
+  executeTokenTransfer(receiptAddress, receiptAmount, session, oktoAuthToken, userSWA);
 });
