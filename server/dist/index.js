@@ -16,6 +16,7 @@ const emailAuthenticate_1 = require("./auth/emailAuthenticate");
 const authenticate_1 = require("./auth/authenticate");
 const express_1 = __importDefault(require("express"));
 const verifySession_1 = require("./auth/verifySession");
+const tokenTransfer_1 = require("./intents/tokenTransfer");
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
@@ -58,5 +59,20 @@ app.get('/api/verify-session', (req, res) => __awaiter(void 0, void 0, void 0, f
     const idToken = ((_a = req.headers.authorization) === null || _a === void 0 ? void 0 : _a.split(' ')[1]) || '';
     const resp = yield (0, verifySession_1.verifySession)(idToken);
     res.status(200).json(resp);
+}));
+app.post('/api/token-transfer', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    const idToken = ((_a = req.headers.authorization) === null || _a === void 0 ? void 0 : _a.split(' ')[1]) || '';
+    const senderAddr = req.body.senderAddr;
+    const amount = req.body.amount;
+    const sessionConfig = req.body.sessionConfig;
+    const data = {
+        caip2Id: "eip155:84532", // BASE_TESTNET
+        recipient: senderAddr,
+        token: "", // Left empty because transferring native token
+        amount: amount, // denomination in lowest decimal (18 for WETH)
+    };
+    const result = yield (0, tokenTransfer_1.transferToken)(data, sessionConfig, idToken);
+    res.json({ result: result });
 }));
 app.listen(8080);
