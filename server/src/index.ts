@@ -59,6 +59,7 @@ app.get('/api/verify-session', async (req: Request, res: Response) => {
 });
 
 app.post('/api/token-transfer', async (req: Request, res: Response) => {
+  console.log(req.body);
   const idToken = req.headers.authorization?.split(' ')[1] || '';
   const senderAddr = req.body.senderAddress;
   const amount: number = req.body.amount;
