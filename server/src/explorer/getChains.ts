@@ -14,6 +14,7 @@ dotenv.config();
  * @throws Error if the API request fails.
  */
 export async function getChains(OktoAuthToken: string) {
+  console.log("bearer: ", OktoAuthToken);
   try {
     const response = await axios.get(
       "https://sandbox-api.okto.tech/api/oc/v1/supported/networks",
