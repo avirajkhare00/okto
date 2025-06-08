@@ -20,6 +20,8 @@
     "@noble/curves": "^1.9.2",
     "@noble/hashes": "^1.8.0",
     "@types/node": "^22.15.30",
+    "buffer": "^6.0.3",
+    "save": "^2.9.0",
     "webpack": "^5.99.9",
     "webpack-cli": "^6.0.1"
   }

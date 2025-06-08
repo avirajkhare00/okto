@@ -1,5 +1,6 @@
 import { secp256k1 } from "@noble/curves/secp256k1";
 import { keccak_256 } from "@noble/hashes/sha3";
+import { Buffer } from 'buffer';
 
 /**
 * Class used to create and manage session keys
