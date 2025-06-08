@@ -30,7 +30,6 @@ dotenv_1.default.config();
 function getChains(OktoAuthToken) {
     return __awaiter(this, void 0, void 0, function* () {
         var _a;
-        console.log("bearer: ", OktoAuthToken);
         try {
             const response = yield axios_1.default.get("https://sandbox-api.okto.tech/api/oc/v1/supported/networks", {
                 headers: {
