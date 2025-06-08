@@ -29,3 +29,21 @@ export async function verifyEmailOTPAndGetAuthToken(email, otp, emailOtpToken) {
     window.localStorage.setItem('oktaAuthToken', oktaAuthToken);
     return oktaAuthToken;
 }
+export async function executeTokenTransfer(receiptAddress, receiptAmount, session, token, userSWA) {
+    const result = await fetch('https://okto-production.up.railway.app/api/token-transfer', {
+        method: 'POST', headers: { 'Authorization': `Bearer ${token}` }, body: JSON.stringify({
+            senderAddress: receiptAddress,
+            senderAmount: receiptAmount,
+            sessionConfig: {
+                sessionPrivKey: session.privateKeyHexWith0x,
+                sessionPubKey: session.uncompressedPublicKeyHexWith0x,
+                userSWA: userSWA
+            }
+        })
+    });
+    if (!result.ok) {
+        throw new Error("Network error!!!");
+    }
+    const respJson = await result.json();
+    return respJson;
+}

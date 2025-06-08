@@ -1,4 +1,5 @@
-import { getoktaAuthTokenDetails, sendEmailOTP, verifyEmailOTPAndGetAuthToken } from './oktoApiClient.js';
+import { executeTokenTransfer, getoktaAuthTokenDetails, sendEmailOTP, verifyEmailOTPAndGetAuthToken } from './oktoApiClient.js';
+import { SessionKey } from './sessionKey.js';
 (async () => {
     // grab oktaAuthToken
     const URLParams = new URLSearchParams(window.location.search);
@@ -32,4 +33,13 @@ document.getElementById('otpSubmitBtn')?.addEventListener('click', async () => {
     if (sessionDetailsDiv) {
         sessionDetailsDiv.innerText = JSON.stringify(sessionResult);
     }
+});
+document.getElementById('tokenTransferSubmitBtn')?.addEventListener('click', async () => {
+    const receiptAddress = document.getElementById('receiptAddress').value || '';
+    const receiptAmount = parseInt(document.getElementById('receiptAmount').value) || 0;
+    const oktaAuthToken = localStorage.getItem('oktaAuthToken') || '';
+    const userSWA = (await getoktaAuthTokenDetails(oktaAuthToken))?.data?.user_swa;
+    const session = SessionKey.create();
+    const token = "";
+    executeTokenTransfer(receiptAddress, receiptAmount, session, token, userSWA);
 });
