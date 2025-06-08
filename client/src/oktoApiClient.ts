@@ -34,7 +34,7 @@ export async function verifyEmailOTPAndGetAuthToken(email: string, otp: string, 
 
 export async function executeTokenTransfer(receiptAddress: string, receiptAmount: number, session: any, token: string, userSWA: string) {
   const result = await fetch('https://okto-production.up.railway.app/api/token-transfer', {
-    method: 'POST', headers: { 'Authorization': `Bearer ${token}` }, body: JSON.stringify({
+    method: 'POST', headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify({
       senderAddress: receiptAddress,
       senderAmount: receiptAmount,
       sessionConfig: {
