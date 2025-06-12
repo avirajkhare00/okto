@@ -27,7 +27,7 @@ export async function verifyEmailOTPAndGetSessionObj(email: string, otp: string,
     throw new Error("Network error!!!");
   }
   const respJson = await result.json();
-  window.localStorage.setItem('sessionObj', respJson);
+  window.localStorage.setItem('session', JSON.stringify(respJson));
   return respJson;
 }
 

@@ -37,8 +37,7 @@ app.post('/api/email/verify-otp', (req, res) => __awaiter(void 0, void 0, void 0
     const result = yield (0, emailAuthenticate_1.verifyOtp)(token, otp, email);
     const authToken = result.auth_token;
     const sessionObj = yield (0, authenticate_1.authenticate)(authToken, 'okto');
-    const encodedSessionObj = Buffer.from(JSON.stringify(sessionObj)).toString('base64');
-    res.redirect(`https://okto-production.up.railway.app?sessionObj=${encodedSessionObj}`);
+    res.status(200).json(sessionObj);
 }));
 app.post('/api/google/oauth', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const jwtCredential = req.body.credential;
