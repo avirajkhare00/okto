@@ -1,21 +1,20 @@
-import { executeTokenTransfer, getOktoAuthTokenDetails, sendEmailOTP, verifyEmailOTPAndGetSessionObj } from './oktoApiClient';
-import { SessionKey } from './sessionKey';
+import { executeTokenTransfer, sendEmailOTP, verifyEmailOTPAndGetSessionObj } from './oktoApiClient';
 
 (async () => {
   // grab oktoAuthToken
   const URLParams = new URLSearchParams(window.location.search);
   const sessionObj = URLParams.get('sessionObj') || '';
-  const decodedSession = atob(sessionObj);
-  const session = JSON.parse(decodedSession);
-  console.log('sessionObj', session);
-  localStorage.setItem('session', JSON.stringify(session));
-  if (session.authToken !== '') {
-    // call authenticate method in backend and store sessionObj
-    //get session details from oktoAuthToken
-    const sessionResult = await getOktoAuthTokenDetails(session.authToken);
+  if (sessionObj !== '') {
+    const decodedSession = atob(sessionObj);
+    const session = JSON.parse(decodedSession);
+    console.log('sessionObj', session);
+    localStorage.setItem('session', JSON.stringify(session));
+  }
+  const session = localStorage.getItem('session') || '';
+  if (session !== '') {
     const sessionDetailsDiv = document.getElementById('sessionDetails');
     if (sessionDetailsDiv) {
-      sessionDetailsDiv.innerText = JSON.stringify(sessionResult);
+      sessionDetailsDiv.innerText = session;
     }
   }
 
@@ -44,7 +43,9 @@ document.getElementById('otpSubmitBtn')?.addEventListener('click', async () => {
 document.getElementById('tokenTransferSubmitBtn')?.addEventListener('click', async () => {
   const receiptAddress = (document.getElementById('receiptAddress') as HTMLInputElement).value || '';
   const receiptAmount = parseInt((document.getElementById('receiptAmount') as HTMLInputElement).value) || 0;
-  const sessionObj = localStorage.getItem('session') || '';
-  const session = JSON.parse(sessionObj);
-  executeTokenTransfer(receiptAddress, receiptAmount, session);
+  const session = localStorage.getItem('session') || '';
+  if (session !== '') {
+    const sessionObj = JSON.parse(session);
+    executeTokenTransfer(receiptAddress, receiptAmount, sessionObj);
+  }
 });
