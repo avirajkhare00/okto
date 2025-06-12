@@ -1,18 +1,4 @@
-export async function emailAuthenticate(idToken: string) {
-  const authToken = window.localStorage.getItem('oktoAuthToken')
-  const result = await fetch('https://okto-production.up.railway.app/api/email/authenticate', { headers: { 'Content-Type': 'application/json' }, method: 'POST', body: JSON.stringify({ idToken: authToken }) })
-  const sessionObj = await result.json()
-  window.localStorage.setItem('sessionObj', sessionObj);
-}
-
-export async function googleAuthenticate(idToken: string) {
-  const authToken = window.localStorage.getItem('oktoAuthToken')
-  const result = await fetch('https://okto-production.up.railway.app/api/google/authenticate', { headers: { 'Content-Type': 'application/json' }, method: 'POST', body: JSON.stringify({ idToken: authToken }) })
-  const sessionObj = await result.json()
-  window.localStorage.setItem('sessionObj', sessionObj);
-}
-
-export async function getoktoAuthTokenDetails(token: string) {
+export async function getOktoAuthTokenDetails(token: string) {
   const headers = {
     'Authorization': `Bearer ${token}`
   }
@@ -35,15 +21,14 @@ export async function sendEmailOTP(email: string) {
   return respJson;
 }
 
-export async function verifyEmailOTPAndGetAuthToken(email: string, otp: string, emailOtpToken: string) {
+export async function verifyEmailOTPAndGetSessionObj(email: string, otp: string, emailOtpToken: string) {
   const result = await fetch('https://okto-production.up.railway.app/api/email/verify-otp', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: email, otp: otp, token: emailOtpToken }) })
   if (!result.ok) {
     throw new Error("Network error!!!");
   }
   const respJson = await result.json();
-  const oktoAuthToken = respJson.auth_token;
-  window.localStorage.setItem('oktoAuthToken', oktoAuthToken);
-  return oktoAuthToken;
+  window.localStorage.setItem('sessionObj', respJson);
+  return respJson;
 }
 
 export async function executeTokenTransfer(receiptAddress: string, receiptAmount: number, session: any, token: string, userSWA: string) {

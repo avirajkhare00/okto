@@ -1,18 +1,15 @@
-import { executeTokenTransfer, getoktoAuthTokenDetails, sendEmailOTP, verifyEmailOTPAndGetAuthToken, googleAuthenticate, emailAuthenticate } from './oktoApiClient';
+import { executeTokenTransfer, getOktoAuthTokenDetails, sendEmailOTP, verifyEmailOTPAndGetSessionObj } from './oktoApiClient';
 import { SessionKey } from './sessionKey';
 
 (async () => {
   // grab oktoAuthToken
   const URLParams = new URLSearchParams(window.location.search);
-  const oktoAuthToken = URLParams.get('oktoAuthToken') || '';
-
-  if (oktoAuthToken !== '') {
-    //store token in localstorage for easy retreival
-    localStorage.setItem('oktoAuthToken', oktoAuthToken);
+  const sessionObj = URLParams.get('sessionObj') || '';
+  console.log('sessionObj', sessionObj);
+  if (sessionObj !== '') {
     // call authenticate method in backend and store sessionObj
-    googleAuthenticate(oktoAuthToken);
     //get session details from oktoAuthToken
-    const sessionResult = await getoktoAuthTokenDetails(oktoAuthToken);
+    const sessionResult = await getOktoAuthTokenDetails(sessionObj);
     const sessionDetailsDiv = document.getElementById('sessionDetails');
     if (sessionDetailsDiv) {
       sessionDetailsDiv.innerText = JSON.stringify(sessionResult);
@@ -34,9 +31,7 @@ document.getElementById('otpSubmitBtn')?.addEventListener('click', async () => {
   const emailValue: string = emailInput?.value || '';
   const emailOtpToken: string = window.localStorage.getItem('emailOtpToken') || '';
   //lets verify also
-  const oktoAuthToken = await verifyEmailOTPAndGetAuthToken(emailValue, otpValue, emailOtpToken);
-  emailAuthenticate(oktoAuthToken);
-  const sessionResult = await getoktoAuthTokenDetails(oktoAuthToken);
+  const sessionResult = await verifyEmailOTPAndGetSessionObj(emailValue, otpValue, emailOtpToken);
   const sessionDetailsDiv = document.getElementById('sessionDetails');
   if (sessionDetailsDiv) {
     sessionDetailsDiv.innerText = JSON.stringify(sessionResult);
@@ -46,8 +41,8 @@ document.getElementById('otpSubmitBtn')?.addEventListener('click', async () => {
 document.getElementById('tokenTransferSubmitBtn')?.addEventListener('click', async () => {
   const receiptAddress = (document.getElementById('receiptAddress') as HTMLInputElement).value || '';
   const receiptAmount = parseInt((document.getElementById('receiptAmount') as HTMLInputElement).value) || 0;
-  const oktoAuthToken = localStorage.getItem('oktoAuthToken') || '';
-  const userSWA = (await getoktoAuthTokenDetails(oktoAuthToken))?.data?.user_swa;
+  const sessionObj = localStorage.getItem('sessionObj') || '';
+  const userSWA = (await getOktoAuthTokenDetails(sessionObj))?.data?.user_swa;
   const session = SessionKey.create();
-  executeTokenTransfer(receiptAddress, receiptAmount, session, oktoAuthToken, userSWA);
+  executeTokenTransfer(receiptAddress, receiptAmount, session, sessionObj, userSWA);
 });

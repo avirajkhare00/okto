@@ -13,8 +13,14 @@ exports.authenticate = authenticate;
 const generateOktoAuthToken_1 = require("../utils/generateOktoAuthToken");
 function authenticate(idToken, provider) {
     return __awaiter(this, void 0, void 0, function* () {
-        const token = yield (0, generateOktoAuthToken_1.loginUsingOAuth)(idToken, provider);
-        console.log('final token', token);
-        return token;
+        const result = yield (0, generateOktoAuthToken_1.loginUsingOAuth)(idToken, provider);
+        if (!result)
+            throw new Error('Authentication failed');
+        const { sessionConfig, authToken } = result;
+        console.log('final token', authToken);
+        return {
+            sessionConfig,
+            authToken
+        };
     });
 }

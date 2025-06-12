@@ -143,7 +143,10 @@ const loginUsingOAuth = (idToken, provider) => __awaiter(void 0, void 0, void 0,
             // STEP 2: Get the authorization token using the sessionConfig object
             const authToken = yield (0, getAuthorizationToken_1.getAuthorizationToken)(sessionConfig);
             console.log("Okto session authToken: ", authToken);
-            return authToken;
+            return {
+                sessionConfig,
+                authToken
+            };
             // Using the above authToken (in the header as bearer token), you can now make requests to all other Okto Endpoints
             // Sample Response:
             // Okto session authToken:  eyJ0eXBlIjoiZWNkc2FfdW5jb21wcmVzc2VkIiwiZGF0YSI6eyJleHBpcmVfYXQiOjE3NDEyNjk1NjYsInNlc3Npb25fcHViX2tleSI6IjB4MDQyMDM5ZjJmMGY5MTBjNDc0YWJmZWYyOWFkMmNlODBiZjg5YTU0ZjZlMjBiODI4MWI0NTQxMzZiNmJhODYyODUwNWY4ZTFmMDllNTFiOGU1NWYxMTNhNzZlZTc5NDY0M2Q4MjA3ZmNhY2E5MjZkMzJhMDBhMzZhY2M3YmVlYjY5ZiJ9LCJkYXRhX3NpZ25hdHVyZSI6IjB4ZmE4YWE5OTAyMzRkOTA0Y2Y3ZmNhN2QxMDlmOGIzZTM0N2MyZjM2ODBiN2IyNzYzYTY4MmY5NGQyNjAyZGRkMjJhZDg2ZjhjMTgxMzllMDBkZmNiNzk3Y2RhNWUxMTQ4YzQ1YjE2Njg2YmYxMDUzMjJjNjIwYTU2MDkzZTYyODIxYyJ9

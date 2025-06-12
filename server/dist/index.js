@@ -45,14 +45,8 @@ app.post('/api/email/authenticate', (req, res) => __awaiter(void 0, void 0, void
 }));
 app.post('/api/google/oauth', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const jwtCredential = req.body.credential;
-    const oktoAuthToken = yield (0, authenticate_1.authenticate)(jwtCredential, 'google');
-    res.redirect(`https://okto-production.up.railway.app?oktoAuthToken=${oktoAuthToken}`);
-}));
-app.post('/api/google/authenticate', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const idToken = req.body.idToken;
-    const provider = 'google';
-    const result = yield (0, authenticate_1.authenticate)(idToken, provider);
-    res.status(200).json(result);
+    const sessionObj = yield (0, authenticate_1.authenticate)(jwtCredential, 'google');
+    res.redirect(`https://okto-production.up.railway.app?sessionObj=${JSON.stringify(sessionObj)}`);
 }));
 app.get('/api/verify-session', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
