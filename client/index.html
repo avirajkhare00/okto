@@ -166,15 +166,36 @@
           <h5 class="section-title">Token Transfer</h5>
           <form>
             <div class="mb-4">
-              <label for="receiptAddress" class="form-label">Recipient Address</label>
-              <input type="text" class="form-control" id="receiptAddress" placeholder="Enter BASE TESTNET address">
+              <label for="networkSelect" class="form-label">Select Network</label>
+              <select class="form-select" id="networkSelect" disabled>
+                <option selected>BASE_TESTNET (eip155:84532)</option>
+              </select>
             </div>
             <div class="mb-4">
-              <label for="receiptAmount" class="form-label">Amount</label>
-              <div class="input-group">
-                <input type="number" class="form-control" id="receiptAmount" placeholder="0.00">
-                <span class="input-group-text">ETH</span>
+              <div class="alert alert-warning p-2" style="font-size:0.95rem;">
+                <span style="font-size:1.1em;">&#9888;&#65039;</span> Sponsorship is not activated for this chain, the
+                user must hold native tokens to proceed with the transfer. You can get the token from the respective
+                faucets
               </div>
+            </div>
+            <div class="mb-4">
+              <label for="tokenSelect" class="form-label">Select Token</label>
+              <select class="form-select" id="tokenSelect" disabled>
+                <option selected>WETH - native</option>
+              </select>
+            </div>
+            <div class="mb-2">
+              <label for="receiptAmount" class="form-label">Amount (in smallest unit):</label>
+              <input type="number" class="form-control" id="receiptAmount" placeholder="10000000000000">
+              <div class="form-text">
+                Balance: 0.0001 &nbsp; INR: 17.30668 &nbsp; USDT: 0.26626
+              </div>
+              <div class="form-text">This token has 18 decimals</div>
+            </div>
+            <div class="mb-4">
+              <label for="receiptAddress" class="form-label">Recipient Address</label>
+              <input type="text" class="form-control" id="receiptAddress"
+                placeholder="0x2CA8F29FD72964a7099ECdBd4387386325541F62">
             </div>
             <button type="button" class="btn btn-primary w-100" id="tokenTransferSubmitBtn">
               Execute Transfer
