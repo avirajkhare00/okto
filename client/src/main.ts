@@ -5,11 +5,13 @@ import { SessionKey } from './sessionKey';
   // grab oktoAuthToken
   const URLParams = new URLSearchParams(window.location.search);
   const sessionObj = URLParams.get('sessionObj') || '';
-  console.log('sessionObj', sessionObj);
-  if (sessionObj !== '') {
+  const decodedSession = Buffer.from(sessionObj, 'base64').toString('utf-8');
+  const session = JSON.parse(decodedSession);
+  console.log('sessionObj', session);
+  if (session.authToken !== '') {
     // call authenticate method in backend and store sessionObj
     //get session details from oktoAuthToken
-    const sessionResult = await getOktoAuthTokenDetails(sessionObj);
+    const sessionResult = await getOktoAuthTokenDetails(session.authToken);
     const sessionDetailsDiv = document.getElementById('sessionDetails');
     if (sessionDetailsDiv) {
       sessionDetailsDiv.innerText = JSON.stringify(sessionResult);

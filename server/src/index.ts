@@ -42,7 +42,8 @@ app.post('/api/email/authenticate', async (req: Request, res: Response) => {
 app.post('/api/google/oauth', async (req: Request, res: Response) => {
   const jwtCredential = req.body.credential;
   const sessionObj = await authenticate(jwtCredential, 'google');
-  res.redirect(`https://okto-production.up.railway.app?sessionObj=${JSON.stringify(sessionObj)}`);
+  const encodedSessionObj = Buffer.from(JSON.stringify(sessionObj)).toString('base64');
+  res.redirect(`https://okto-production.up.railway.app?sessionObj=${encodedSessionObj}`);
 })
 
 app.get('/api/verify-session', async (req: Request, res: Response) => {
