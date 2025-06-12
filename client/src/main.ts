@@ -1,4 +1,4 @@
-import { executeTokenTransfer, getoktoAuthTokenDetails, sendEmailOTP, verifyEmailOTPAndGetAuthToken } from './oktoApiClient';
+import { executeTokenTransfer, getoktoAuthTokenDetails, sendEmailOTP, verifyEmailOTPAndGetAuthToken, googleAuthenticate, emailAuthenticate } from './oktoApiClient';
 import { SessionKey } from './sessionKey';
 
 (async () => {
@@ -9,6 +9,8 @@ import { SessionKey } from './sessionKey';
   if (oktoAuthToken !== '') {
     //store token in localstorage for easy retreival
     localStorage.setItem('oktoAuthToken', oktoAuthToken);
+    // call authenticate method in backend and store sessionObj
+    googleAuthenticate(oktoAuthToken);
     //get session details from oktoAuthToken
     const sessionResult = await getoktoAuthTokenDetails(oktoAuthToken);
     const sessionDetailsDiv = document.getElementById('sessionDetails');
@@ -33,6 +35,7 @@ document.getElementById('otpSubmitBtn')?.addEventListener('click', async () => {
   const emailOtpToken: string = window.localStorage.getItem('emailOtpToken') || '';
   //lets verify also
   const oktoAuthToken = await verifyEmailOTPAndGetAuthToken(emailValue, otpValue, emailOtpToken);
+  emailAuthenticate(oktoAuthToken);
   const sessionResult = await getoktoAuthTokenDetails(oktoAuthToken);
   const sessionDetailsDiv = document.getElementById('sessionDetails');
   if (sessionDetailsDiv) {
