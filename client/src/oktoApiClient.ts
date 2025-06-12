@@ -31,16 +31,12 @@ export async function verifyEmailOTPAndGetSessionObj(email: string, otp: string,
   return respJson;
 }
 
-export async function executeTokenTransfer(receiptAddress: string, receiptAmount: number, session: any, token: string, userSWA: string) {
+export async function executeTokenTransfer(receiptAddress: string, receiptAmount: number, session: any) {
   const result = await fetch('https://okto-production.up.railway.app/api/token-transfer', {
-    method: 'POST', headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify({
+    method: 'POST', headers: { 'Authorization': `Bearer ${session.authToken}`, 'Content-Type': 'application/json' }, body: JSON.stringify({
       senderAddress: receiptAddress,
       senderAmount: receiptAmount,
-      sessionConfig: {
-        sessionPrivKey: session.privateKeyHexWith0x,
-        sessionPubKey: session.uncompressedPublicKeyHexWith0x,
-        userSWA: userSWA
-      }
+      sessionConfig: session.sessionConfig
     })
   });
   if (!result.ok) {

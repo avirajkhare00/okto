@@ -8,6 +8,7 @@ import { SessionKey } from './sessionKey';
   const decodedSession = atob(sessionObj);
   const session = JSON.parse(decodedSession);
   console.log('sessionObj', session);
+  localStorage.setItem('session', JSON.stringify(session));
   if (session.authToken !== '') {
     // call authenticate method in backend and store sessionObj
     //get session details from oktoAuthToken
@@ -43,8 +44,7 @@ document.getElementById('otpSubmitBtn')?.addEventListener('click', async () => {
 document.getElementById('tokenTransferSubmitBtn')?.addEventListener('click', async () => {
   const receiptAddress = (document.getElementById('receiptAddress') as HTMLInputElement).value || '';
   const receiptAmount = parseInt((document.getElementById('receiptAmount') as HTMLInputElement).value) || 0;
-  const sessionObj = localStorage.getItem('sessionObj') || '';
-  const userSWA = (await getOktoAuthTokenDetails(sessionObj))?.data?.user_swa;
-  const session = SessionKey.create();
-  executeTokenTransfer(receiptAddress, receiptAmount, session, sessionObj, userSWA);
+  const sessionObj = localStorage.getItem('session') || '';
+  const session = JSON.parse(sessionObj);
+  executeTokenTransfer(receiptAddress, receiptAmount, session);
 });
