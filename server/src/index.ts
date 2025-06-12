@@ -29,15 +29,11 @@ app.post('/api/email/verify-otp', async (req: Request, res: Response) => {
   const otp = req.body.otp;
   const token = req.body.token;
   const result = await verifyOtp(token, otp, email);
-  res.status(200).json(result);
+  const authToken = result.auth_token;
+  const sessionObj = await authenticate(authToken, 'okto');
+  const encodedSessionObj = Buffer.from(JSON.stringify(sessionObj)).toString('base64');
+  res.redirect(`https://okto-production.up.railway.app?sessionObj=${encodedSessionObj}`);
 });
-
-app.post('/api/email/authenticate', async (req: Request, res: Response) => {
-  const idToken = req.body.idToken;
-  const provider = 'okto';
-  const result = await authenticate(idToken, provider);
-  res.status(200).json(result);
-})
 
 app.post('/api/google/oauth', async (req: Request, res: Response) => {
   const jwtCredential = req.body.credential;
