@@ -1,6 +1,6 @@
 export async function emailAuthenticate(idToken: string) {
   const authToken = window.localStorage.getItem('oktoAuthToken')
-  const result = await fetch('https://okto-production.up.railway.app/api/api/email/authenticate', { headers: { 'Content-Type': 'application/json' }, method: 'POST', body: JSON.stringify({ idToken: authToken }) })
+  const result = await fetch('https://okto-production.up.railway.app/api/email/authenticate', { headers: { 'Content-Type': 'application/json' }, method: 'POST', body: JSON.stringify({ idToken: authToken }) })
   const sessionObj = await result.json()
   window.localStorage.setItem('sessionObj', sessionObj);
 }
