@@ -5,7 +5,7 @@ import { SessionKey } from './sessionKey';
   // grab oktoAuthToken
   const URLParams = new URLSearchParams(window.location.search);
   const sessionObj = URLParams.get('sessionObj') || '';
-  const decodedSession = Buffer.from(sessionObj, 'base64').toString('utf-8');
+  const decodedSession = atob(sessionObj);
   const session = JSON.parse(decodedSession);
   console.log('sessionObj', session);
   if (session.authToken !== '') {
