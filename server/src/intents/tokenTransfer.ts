@@ -219,14 +219,15 @@ export async function transferToken(
   console.log("Job ID:", jobId);
   // Sample Response:
   // jobId: a0a54427-11c8-4140-bfcc-e96af15ce9cf
+  return jobId;
 
   // Check the status of the jobId and get the transaction details
-  const txn_details = await getOrderHistory(
-    OktoAuthToken,
-    jobId,
-    "TOKEN_TRANSFER"
-  );
-  console.log("Order Details:", JSON.stringify(txn_details, null, 2));
+  // const txn_details = await getOrderHistory(
+  //   OktoAuthToken,
+  //   jobId,
+  //   "TOKEN_TRANSFER"
+  // );
+  // console.log("Order Details:", JSON.stringify(txn_details, null, 2));
 }
 
 // To get the caipId, please check: https://docsv2.okto.tech/docs/openapi/technical-reference
